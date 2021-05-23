@@ -1,0 +1,222 @@
+---
+geometry: paper=a4paper,lmargin=2cm, rmargin=2cm, tmargin=2cm, bmargin=2cm
+font-size: 12pt
+bibliography: "references.bib"
+biblio-style: "asaPortuguese2"
+link-citations: true
+output: 
+  bookdown::pdf_book:
+    toc: false
+    number_sections: true
+    keep_tex: yes
+    fig_caption: true
+    includes:
+      in_header: "header.tex"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", out.width = "75%", fig.pos = "htbp",
+                      warning = FALSE)
+library(openxlsx)
+library(psych)
+library(readxl)
+library(tidyverse)
+```
+
+\onehalfspacing
+
+  \begin{titlepage}
+    \drop=0.1\textheight
+    \centering
+    \vspace*{\baselineskip}
+    \rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+    \rule{\textwidth}{0.4pt}\\[\baselineskip]
+    {\LARGE RELATÓRIO FINAL \\ 
+    \vspace*{\baselineskip}
+    VALIDAÇÃO DE ESCALA DE CONHECIMENTO, ATITUDES E PRÁTICAS DE PROFESSORES SOBRE O TRANSTORNO DO ESPECTRO AUTISTA}\\[0.2\baselineskip]
+    \rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+    \rule{\textwidth}{1.6pt}\\[\baselineskip]
+    \scshape
+    Trabalho de consultoria realizado no contexto da ação de extensão da Universidade Federal da Bahia com título \textit{Consultoria Estatística}. \\
+    \vspace*{2\baselineskip}
+    Elaborado por \\[\baselineskip]
+    {\Large Gilberto Pereira Sassi\par}
+    \vfill
+    {\scshape 2021} \\
+    {\large Universidade Federal da Bahia}\\
+    {\large Instituto de Matemática e Estatística}\\
+    {\large Departamento de Estatística}\par
+  \end{titlepage}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+# Introdução
+
+Este relatório apresenta os resultados da análise estatística do conjunto de dados referente à seguinte consultoria:
+
+* **Consulente:** Danilo de Assis Pereira
+* **Título do projeto:** Validação de escala de conhecimento, atitudes e práticas de professores sobre transtorno do espectro autista
+
+# Materiais e métodos
+
+O consulente pediu apoio no sexto passo do polo teórico na validação de conteúdo da escala de _conhecimento, atitude e prática _ do modelo psicométrico proposto por @pasquali1999elaboraccao. Nesta consultoria, construimos três gráficos:
+
+1. Gráfico de distribuição das características dos juízes;
+1. Gráfico do Coeficiente de Validade de Conteúdo em relação à clareza/compreensão e relevância dos itens;
+1. Gráfico de distribuição de concordância entre os juízes;
+
+e duas tabelas:
+
+1. Tabela do perfil dos especialistas segundos os atributos conforme estabelecido por @jasper1994expert;
+1. Tabela com o coeficiente kappa de Cohen [@kraemer2014kappa] para cada par de juízes.
+
+Todas as computações e gráficos foram construídas usando a linguagem `R` [@Rlang], e as tabelas foram construídas usando o `excel`.
+
+## Cálculo do Coeficiente de Validade de Conteúdo
+
+Para computar o Coeficinte de Validade Conteúdo, as seguintes etapas foram realizadas:
+
+1. Atribui os seguintes valores às categorias das respostas referentes à _clareza/compreensão_: 1 à categoria _nada claro_; 2 à categoria _pouco claro_; 3 à categoria _muito claro_; e 4 à categoria _totalmente claro_. E atribui os seguintes valores às categorias referetes à _relevância_: 1 à categoria _nada relevante_; 2 à categoria _pouco relevante_; 3 à categoria _muito relevante_; e 4 à categoria _totalmente claro_;
+1. Usando as notas do passo 1), cacula-se a média das notas para cada item: $M_x = \frac{x_1 + x_2 + x_3 + x_4}{4}$, em que $x_1$ é a nota do juiz 1 para este item, $x_2$ é a nota do juiz 2 para este item, $x_3$ é a nota do juiz 3 para este item, e $x_4$ é a nota do juiz 4 para este item;
+1. Calcula-se o erro $Pe = \frac{1}{4}=0,25$ de cada item para descontar possíveis vieses dos juízes;
+1. Calcula-se o Coeficiente de Validade do Conteúdo para cada item: $CVC_i = \frac{M_x}{V_{max}} - Pe$, , em que $V_{max}$ representa o maior no conjunto ${x_1, x_2, x_3, x_4}$, onde $x_1$ é a nota do juiz 1 para este item, $x_2$ é a nota do juiz 2 para este item, $x_3$ é a nota do juiz 3 para este item, e $x_4$ é a nota do juiz 4 para este item;
+1. O Coeficiente de Validade do Conteúdo total do questionário é a média do Coeficiente de Validade do Conteúdo de cada item. 
+
+Todos os cálculos desta seção seguiram as instruções e a referência [@firmiano2017escala] disponbilizadas pelo consulente.
+
+## Cálculo do coeficiente Kappa de Cohen
+
+Computa-se o Coeficiente Kappa de Cohen entre dois juízes através da seguinte equação
+$$
+\kappa = \frac{p_o - p_e}{1 - p_e},
+$$
+em que $p_0$ é a proporção de concordância entre os dois juízes, e $p_e$ é computado por
+$$
+p_e = \frac{n_{11}n_{12} + n_{21}n_{22} + n_{31}n_{32}}{29^2},
+$$
+em que 
+
+* $n_{11}$ é o número de vezes que o juiz 1 escolheu a categoria _Conhecimento_ e $n_{12}$ é o número de vezes que o juiz 2 escolheu a categoria _Conhecimento_;
+* $n_{21}$ é o número de vezes que o juiz 1 escolheu a categoria _Atitude_ e $n_{22}$ é o número de vezes que o juiz 2 escolheu a categoria _Atitude_;
+* $n_{31}$ é o número de vezes que o juiz 1 escolheu a categoria _Prática_ e $n_{32}$ é o número de vezes que o juiz 2 escolheu a categoria _Prática_.
+
+A computação apresentada nesta seção usou as seguintes referências: @firmiano2017escala, @kraemer2014kappa e @kappa2020cohen.
+
+# Resultados
+
+Nesta seção, vou incluir os resulados obtidos. Além deste relatório vou enviar ao consulente os seguinte arquivos:
+
+1. `grafico1.zip`: arquivo `.zip` com quatros figuras do _gráfico de distribuição das características dos juízes_  nos formatos `.jpeg`, `.png`, `.eps` e `.pdf`;
+1. `grafico2.zip`: arquivo `.zip` com quatros figuras do _gráfico do Coeficiente de Validade de Conteúdo em relação à clareza/compreensão e relevância dos itens_ nos formatos `.jpeg`, `.png`, `.eps` e `.pdf`;
+1. `grafico3.zip`: arquivo `.zip` com quatros figuras do _gráfico de distribuição de concordância entre os juízes_ nos formatos `.jpeg`, `.png`, `.eps` e `.pdf`;
+1. `danilo.xlsx`: arquivo `excel` com tabelas para as adaptações e formatações que o consulente julgar conveniente. 
+
+\newpage 
+
+## Gráfico de distribuição das características dos juízes
+
+Na Figura \@ref(fig:grafico1), incluimos o perfil dos especialistas segundo os atributos definidos por @jasper1994expert. Notamos que nenhum juiz tem o atributo _características que tornam o profissional com alta classificação atribuída por uma autoridade_.
+
+```{r grafico1, fig.cap="Gráfico de distribuição das características dos juízes.", out.width="90%"}
+knitr::include_graphics("../grafico1.png")
+```
+
+\newpage
+
+## Gráfico do Coeficiente de Validade de Conteúdo em relação à clareza/compreensão e relevância dos itens
+
+Na Figura \@ref(fig:grafico2), incluimos o gráfico com o coeficiente CVC de clareza/compreensão e com o coeficiente de CVC de relevância para cada item. Além disso, incluímos o valor mínimo recomendando por @hernandez2002contributions ($0,8$). Como a amostra tem quatro juízes, o valor máximo do coeficiente CVC é $1-\frac{1}{4}=0,75$ para esta amostra, abaixo do valor recomendado por @hernandez2002contributions, e, por isso, a linha azul que representa o _valor mínimo recomendado_ está acima de todas as barras na Figura \@ref(fig:grafico2).
+
+```{r grafico2, fig.cap="Gráfico de distribuição das características dos juízes.", out.width="90%"}
+knitr::include_graphics("../grafico2.png")
+```
+
+\newpage
+
+## Gráfico de distribuição de concordância entre os juízes
+
+Na Figura \@ref(fig:grafico3), mostramos o gráfico de concordância entre os juízes sobre os construtos de cada Item. Os itens 11, 12, 13, 14, 15, 17, 18, 19, 20, 21 e 29 apresentam baixa concordância entre os juízes.
+
+Para construir este gráfico, chequei se a resposta sobre o construto do item do juiz é igual ao construto do item de acordo com o documento com título _Questionario - vers. Mar 2021.docx_ disponibilizado pelo consulente.
+
+```{r grafico3, fig.cap="Número de juízes concordantes."}
+knitr::include_graphics("../grafico3.png")
+```
+
+\newpage
+
+## Tabela do perfil dos especialistas segundos os atributos
+
+Na Tabela \@ref(tab:atributo), mostramos que as características dos juízes selecionados se distribuem de forma representativa nos atributos, com exceção ao atributo _homenagem/menção honrosa de reconhecimento como autoridade na área de Educação Especial e/ou Transtorno do Espectro Autista, recebida de instituição científica_.
+
+\begin{table}[htbp]
+\caption{Atributo / característica profissional.}
+\label{tab:atributo}
+\scalebox{0.65}{
+\begin{tabular}{|l|r|}
+\hline
+\textbf{Habilidades/conhecimentos adquirido pela experiência na área de Educação Especial} & \multicolumn{1}{l|}{\textbf{}} \\ \hline
+Tempo mínimo de 5 anos de experiência profissional assistencial na área de Educação Especial & 4 \\ \hline
+Tempo mínimo de 5 anos de experiência docente na área de Educação Especial & 0 \\ \hline
+\textbf{Característica que tornam a (o) profissional autoridade  na área de Educação Especial} & \multicolumn{1}{l|}{\textbf{}} \\ \hline
+Convidado em evento científico nacional ou internacional na área de Educação Especial e/ou 
+Transtorno do Espectro Autista como palestrante & 3 \\ \hline
+Orientou trabalhos acadêmicos de Pós-graduação Stricto sensu com temática relativa à área de
+ Educação Especial e/ou Transtorno do Espectro Autista? & 3 \\ \hline
+Autoria em artigos (s) científicos na área de Educação Especial e/ou Transtorno do Espectro Autista & 4 \\ \hline
+Pós-graduação Stricto sensu com dissertação ou tese em temática relativa na área de
+ Educação Especial e/ou Transtorno do Espectro Autista & 4 \\ \hline
+Participação em banca(s) avaliadora(s) de trabalhos acadêmico de Pós-graduação Stricto Sensu
+ com temática relativa na área de Educação Especial e/ou Transtorno do Espectro Autista & 2 \\ \hline
+\textbf{Característica que tornam o profissional possuidor de habilidade especial em estudos de validação } & \multicolumn{1}{l|}{\textbf{}} \\ \hline
+Orientou trabalhos de Pós-graduação Stricto sensu com temática relativa
+ à validação de instrumentos de coleta de dados  & 2 \\ \hline
+Autoria em artigo (s) científicos na área de validação de instrumento de coleta de dados  & 1 \\ \hline
+Pós-graduação Stricto sensu com pesquisa na área de validação de instrumentos  & 2 \\ \hline
+Participação em banca(s) avaliadora(s) de trabalhos acadêmico de Pós-graduação Stricto Sensu
+ com temática relativa na área de validação de instrumento de coleta de dados & 0 \\ \hline
+\textbf{Características que tornam o profissional com alta classificação atribuída por uma autoridade } & \multicolumn{1}{l|}{\textbf{}} \\ \hline
+Homenagem/menção honrosa de reconhecimento como autoridade na área
+ de Educação Especial e/ou Transtorno do Espectro Autista, recebida de instituição científica & 0 \\ \hline
+Trabalhos premiados em eventos científicos nacionais e internacionais cujo conteúdo
+ seja referente à área de uroginecologia  & 0 \\ \hline
+Trabalhos premiados em eventos científicos nacionais e internacionais cujo
+ conteúdo seja referente à área de validação de instrumento de coleta de dados  & 0 \\ \hline
+\textbf{Total de juízes } & \textbf{10} \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\newpage
+
+## Tabela com o coeficiente Kappa de Cohen para cada par de juízes
+
+Na Tabela \@ref(tab:kappa), calculamos o coeficiente Kappa para cada par de juízes. Usando a _regra de ouro_ proposta por @firmiano2017escala, temos que
+
+1. Os pares de juízes (1, 2), (1, 3), (2, 4) e (3, 4) apresentam valores do coeficiente Kappa de Cohen entre $0,40$ e $0,75$, ou seja, apresentam concordância satisfatória a bom;
+1. Todos os outros pares de juízes apresentam valores excelentes de concordância de acordo com o coeficinte Kappa de Cohen.
+
+\begin{table}[htbp]
+\centering
+\caption{Coefciente kappa de Cohen para cada par de juízes.}
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+ & \multicolumn{1}{l|}{Juiz 1} & \multicolumn{1}{l|}{Juiz 2} & \multicolumn{1}{l|}{Juiz 3} & \multicolumn{1}{l|}{Juiz 4} \\ \hline
+Juiz 1 & 1,00 & 0,63 & 0,57 & 0,79 \\ \hline
+Juiz 2 & 0,63 & 1,00 & 0,94 & 0,69 \\ \hline
+Juiz 3 & 0,57 & 0,94 & 1,00 & 0,64 \\ \hline
+Juiz 4 & 0,79 & 0,69 & 0,64 & 1,00 \\ \hline
+\end{tabular}
+\label{tab:kappa}
+\end{table}
+
+
+\cleardoublepage
+
+# Referências

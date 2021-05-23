@@ -1,0 +1,72 @@
+---
+title: "Consultoria Danilo -- Segunda Fase"
+output: bookdown::html_notebook2
+editor_options: 
+  chunk_output_type: console
+---
+
+# Pacotes usados
+
+```{r}
+library(readxl)
+library(readr)
+library(statBasics)
+library(tidyverse)
+```
+
+# Objetivo
+
+Validação de questionário usando a metodologia CAP (Conhecimento, Atitude e Prática). 
+Para demonstrar a validade de um instrumento, usa-se o modelo trinitário: validade do construto, validade de conteúdo e validade de critério.
+
+* **Valide de construto:** Queremos saber se o instrumento mede o construto. Usa análise fatorial e análise de consistência interna.
+* **Validação de Conteúdo:** Em duas fases: na primeira fase o autor escreve os itens e na segunda fase tem uma avaliação especializada.
+* **Validade de critério:** Eficâcia em predizer um desempenho específico. (Aplicar o teste para ver se funciona.)
+
+Modelo psicométrico proposto por Pasquali(1999): 
+
+* **polo teórico:** construção teórica do instrumento. Mais relacionada à validade do construto e validade de conteúdo. Seis passos:  sistema psicológico, propriedade do sistema psicológico, dimensionalidade do atributo, definições do construto, operacionalização do construto, análise teórica dos itens. Aqui usamos as técnicas de _Conhecimento, Prática e Atitude_.
+* **polo experimental:** procedimentos empíricos. Mais relacionada a validade de critério. Planejamento e a aplicação a uma amostra piloto, que são o sétimo e oitavo passo no modelo de Pasquali (1999).
+* **polo analítico:** procedimentos analíticos. Mais relacionada a validade de critério. Consiste de análises estatísticas da amsotra piloto para estimar a confiabilidade do instrumento, que são os quatro últimos passos no modelo de Pasquali (1999): Dimensionalidade (análise fatorial para checar se o instrumento mensura o construto), análise emprírica dos itens (dificuldade do item e parâmetro de acerto casual), precisão da escala (análise da homogeneidade usando o coeficiente alpha de Cronbach), estabelecimento de normas (desenvolvimento de parâmetros para interpretar os resultados).
+
+## Polo teórico -- análise teórica dos itens
+
+Submissão a juízes para fazerem _análise semântica_ e _análise de pertinência_ dos itens. 
+
+* **Análise semântica:** os itens são compreensíveis ao público-alvo?
+* **Análise de pertinência:** os itens estão representando o construto?
+
+## Metodologia
+
+Os construtos, que são Conhecimento, Atitude e Prática, terão a _validade de conteúdo_ (passo 6 do polo teórico do modelo de Pasquali (1999)).
+
+### Técnica Delphi
+
+Ciclos de avaliação até o consenso com 3 a 6 juízes, que devem ser experts na área de atuação. Os aspectos avaliados:
+
+* _Análise de pertinência:_ Relevância e relação do item com os construtos
+* _Análise semântica:_ clareza e compreensão 
+
+#### Como determinar se um juiz é um expert
+
+Conjunto de atributos definidos por Jasper (1994). Cada atributo tem várias características, e para o expert ter o atributo ele precisa ter pelo uma das características. Uma pessoa é considerada um expert se tiver pelo menos dois atributos.
+O conjunto de atributos e suas características estão elencados no Quadro 01 de "ESCALA DE AVALIAÇÃO DO CONHECIMENTO, ATITUDE E PRÁTICA DE GESTANTES SOBRE INCONTINÊNCIA URINÁRIA: CONSTRUÇÃO E VALIDAÇÃO DE CONTEÚDO", que está na página 33.
+
+#### Apresentação dos resultados dos juízes
+
+Usamos os seguintes termos:
+
+* _clareza e compreensão:_ referente a análise semântica dos itens, onde a redação dos itens é avaliada
+* _relevância:_ grau de associação do item com os construtos em análise
+
+Usa-se escala linkert com valores de 1 a 4, calcula-se o Coeficiente de Validade do Conteúdo para cada item (CVCi) e o Coeficiente de Validade do Conteúdo para todo o instrumento (CVCt). Para calcular o CVCi e CVCt, usa-se o seguinte algoritmo descrito abaixo (supondo que temos $J$ juízes e o instrumento tenha $I$ itens):
+
+1. Calcular a nota média do item: $\bar{x}_i = \frac{\sum_{j=1}^{J}x_j}{J}$;
+1. Calcular o Coeficiente de Validade do Conteúdo do $i$-ésimo item: $CVC_i = \frac{\bar{x}_i}{\max{\{x_1, \dots, x_I\}}}$;
+1. Penalização de vieses dos juízes: $P_i = \frac{1}{J}$;
+1. Finalmente, o Coeficiente de Validade do Instrumento é dado por: $CVC_t = \frac{\sum_{j=1}^{J}CVC_i}{J}$
+
+Linha de Hernandez-Nieto(2002), $CVC_i$ precisa ser maior que ser maior que $0,8$. Minha sugestão: ser maior que $80\%$ que a maior nota possível. Isso para _clareza e compreensão_ e _relevância_.
+
+Além disso, investiga-se a dimensão teórica dos itens. Cada juiz indica qual construto o item está relacionado entre os três possíveis: Conhecimento, Atitude e Prática. Calcula-se o Coeficiente Kappa de Cohen para checar a concordância entre os juízes. Valores em $(0; 0,4]$ indicam concordância pobre; valores em $[0,4; 0,75]$ indicam concordância satisfatória; e valores em $(0,75; 1]$ indicam uma excelente concordância entre os juízes.
+
