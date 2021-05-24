@@ -68,7 +68,7 @@ Usa-se escala Linkert com valores de 1 a 4, calcula-se o Coeficiente de Validade
 1. Calcular a nota média do item: $\bar{x}_i = \frac{\sum_{j=1}^{J}x_j}{J}$;
 1. Calcular o Coeficiente de Validade do Conteúdo do $i$-ésimo item: $CVC_i = \frac{\bar{x}_i}{\max{\{x_1, \dots, x_I\}}}$;
 1. Penalização de vieses dos juízes: $P_i = \frac{1}{J}$;
-1. Finalmente, o Coeficiente de Validade do Instrumento é dado por: $CVC_t = \frac{\sum_{j=1}^{J}CVC_i}{J}$
+1. Finalmente, o Coeficiente de Validade do Instrumento é dado por: $CVC_t = \frac{\sum_{i=1}^{I}CVC_i}{I}$
 
 Linha de Hernandez-Nieto(2002), $CVC_i$ precisa ser maior que ser maior que $0,8$. Minha sugestão: ser maior que $80\%$ que a maior nota possível. Isso para _clareza e compreensão_ e _relevância_.
 

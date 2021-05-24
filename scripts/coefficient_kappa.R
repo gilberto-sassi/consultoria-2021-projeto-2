@@ -41,10 +41,10 @@ for(i in 1:3) {
     }
 }
 
-openxlsx::write.xlsx(tab_coef_cohen, file="output/cohen_kappa_pair.xlsx", row.names = T)
+openxlsx::write.xlsx(tab_coef_cohen, file="output/cohen_kappa_pair.xlsx", row.names = F)
 
 teste_geral <- irr::kappam.fleiss(t(dados))
-coef_kappa_general  <- c(teste_geral$value, teste_geral$p.value)
-names(coef_kappa_general) <- c("Fleiss' Kappa", "valor p")
+coef_kappa_general  <- cbind(teste_geral$value, teste_geral$p.value)
+colnames(coef_kappa_general) <- c("Fleiss' Kappa", "valor p")
 
-openxlsx::write.xlsx(coef_kappa_general, file="output/cohen_kappa.xlsx", row.names = T)
+openxlsx::write.xlsx(coef_kappa_general, file="output/cohen_kappa.xlsx", row.names = F)

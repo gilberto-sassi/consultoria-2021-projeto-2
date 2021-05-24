@@ -65,7 +65,7 @@ ggplot2::ggplot(df_cvc, ggplot2::aes(x = ItemNum)) +
         legend.text = ggplot2::element_text(size = 7))
 
 ggplot2::ggsave('figures/grafico2_80_perc.png')
-ggplot2::ggsave('figures/grafico2_80_percjpeg')
+ggplot2::ggsave('figures/grafico2_80_perc.jpeg')
 ggplot2::ggsave('figures/grafico2_80_perc.pdf')
 ggplot2::ggsave('figures/grafico2_80_perc.eps')
 
